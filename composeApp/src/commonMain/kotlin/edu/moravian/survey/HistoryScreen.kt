@@ -13,13 +13,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.moravian.survey.data.SurveyResult
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -37,13 +35,9 @@ fun HistoryScreen(
     repository: SurveyRepository,
     onOpenSurvey: (Long) -> Unit,
 ) {
-    var entries by remember { mutableStateOf(emptyList<SurveyResult>()) }
-    var loaded by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        entries = repository.getAll()
-        loaded = true
-    }
+    val viewModel = viewModel { HistoryScreenViewModel(repository) }
+    val entries by viewModel.entries.collectAsState()
+    val loaded by viewModel.loaded.collectAsState()
 
     Column(
         modifier =

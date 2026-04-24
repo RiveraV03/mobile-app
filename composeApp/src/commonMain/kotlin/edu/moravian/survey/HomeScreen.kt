@@ -12,13 +12,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.moravian.survey.data.SurveyResult
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -38,13 +36,9 @@ fun HomeScreen(
     onTakeSurvey: () -> Unit,
     onOpenHistory: () -> Unit,
 ) {
-    var mostRecent by remember { mutableStateOf<SurveyResult?>(null) }
-    var loaded by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        mostRecent = repository.getMostRecent()
-        loaded = true
-    }
+    val viewModel = viewModel { HomeScreenViewModel(repository) }
+    val mostRecent by viewModel.mostRecent.collectAsState()
+    val loaded by viewModel.loaded.collectAsState()
 
     Column(
         modifier =

@@ -10,15 +10,12 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import edu.moravian.survey.data.toIntSet
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import surveytaker.composeapp.generated.resources.Res
@@ -35,46 +32,11 @@ fun ViewSurveyScreen(
     surveyId: Long,
     repository: SurveyRepository,
 ) {
-    var loading by remember { mutableStateOf(true) }
-    var survey by remember { mutableStateOf(AMISOS_R_SURVEY) }
-    var score by remember { mutableStateOf(0) }
-    var timestamp by remember { mutableStateOf(0L) }
-
-    LaunchedEffect(surveyId) {
-        val result = repository.getById(surveyId)
-        if (result != null) {
-            score = result.score
-            timestamp = result.timestamp
-
-            // Pre-fill sounds answer
-            var updatedSurvey = survey
-            val soundsQuestion = updatedSurvey["sounds"] as? QuestionWithMultiOptions
-            if (soundsQuestion != null) {
-                updatedSurvey =
-                    updatedSurvey.update(
-                        soundsQuestion.copy(answer = result.soundsAnswer.toIntSet()),
-                    )
-            }
-
-            // Pre-fill emotions answer
-            val emotionsQuestion = updatedSurvey["emotions"] as? QuestionWithMultiOptionsAndOther
-            if (emotionsQuestion != null) {
-                updatedSurvey =
-                    updatedSurvey.update(
-                        emotionsQuestion.copy(
-                            answer =
-                                Pair(
-                                    result.emotionsIndices.toIntSet(),
-                                    result.emotionsOther ?: "",
-                                ),
-                        ),
-                    )
-            }
-
-            survey = updatedSurvey
-        }
-        loading = false
-    }
+    val viewModel = viewModel { ViewSurveyScreenViewModel(surveyId, repository) }
+    val loading by viewModel.loading.collectAsState()
+    val survey by viewModel.survey.collectAsState()
+    val score by viewModel.score.collectAsState()
+    val timestamp by viewModel.timestamp.collectAsState()
 
     if (loading) {
         Row(verticalAlignment = Alignment.CenterVertically) {

@@ -31,5 +31,8 @@ fun Set<Int>.toStoredString(): String = joinToString(",")
 
 /** Convert a stored comma-separated string back to a Set<Int>: "0,2,5" -> {0, 2, 5} */
 fun String?.toIntSet(): Set<Int> =
-    if (isNullOrBlank()) emptySet()
-    else split(",").mapNotNull { it.trim().toIntOrNull() }.toSet()
+    if (isNullOrBlank()) {
+        emptySet()
+    } else {
+        split(",").mapNotNull { it.trim().toIntOrNull() }.toSet()
+    }

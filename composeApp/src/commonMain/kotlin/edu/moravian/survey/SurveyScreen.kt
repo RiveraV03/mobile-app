@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import edu.moravian.survey.data.SurveyRepository
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import surveytaker.composeapp.generated.resources.Res
@@ -37,9 +36,10 @@ fun SurveyScreen(
     val submitAttempted by viewModel.submitAttempted.collectAsState()
 
     Column(
-        modifier = Modifier
-            .safeContentPadding()
-            .fillMaxSize(),
+        modifier =
+            Modifier
+                .safeContentPadding()
+                .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         SurveyView(

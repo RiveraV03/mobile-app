@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.room.Room
 import edu.moravian.survey.data.SurveyDatabase
-import edu.moravian.survey.data.SurveyRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

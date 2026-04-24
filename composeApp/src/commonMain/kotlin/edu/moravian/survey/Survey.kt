@@ -1,7 +1,9 @@
 package edu.moravian.survey
 
 import org.jetbrains.compose.resources.StringResource
-import surveytaker.composeapp.generated.resources.*
+import surveytaker.composeapp.generated.resources.Res
+import surveytaker.composeapp.generated.resources.invalid_option_selected
+import surveytaker.composeapp.generated.resources.no_option_selected
 import kotlin.collections.map
 import kotlin.jvm.JvmName
 
@@ -102,11 +104,12 @@ data class QuestionWithMultiOptions(
     override val answer: Set<Int>? = null,
 ) : Question<Set<Int>> {
     // NOTE: We allow the user to select no options, so we only check for invalid indices, not for null/empty
-    override val errorMessage get() = if (answer?.any { it !in options.indices } == true) {
-        Res.string.invalid_option_selected
-    } else {
-        null
-    }
+    override val errorMessage get() =
+        if (answer?.any { it !in options.indices } == true) {
+            Res.string.invalid_option_selected
+        } else {
+            null
+        }
 }
 
 /**
@@ -122,11 +125,12 @@ data class QuestionWithMultiOptionsAndOther(
     override val answer: Pair<Set<Int>, String>? = null,
 ) : Question<Pair<Set<Int>, String>> {
     // NOTE: We allow the user to select no options, so we only check for invalid indices, not for null/empty
-    override val errorMessage get() = if (answer?.first?.any { it !in options.indices } == true) {
-        Res.string.invalid_option_selected
-    } else {
-        null
-    }
+    override val errorMessage get() =
+        if (answer?.first?.any { it !in options.indices } == true) {
+            Res.string.invalid_option_selected
+        } else {
+            null
+        }
 }
 
 /**
@@ -140,13 +144,14 @@ operator fun Survey.get(id: String): SurveyElement? = firstOrNull { it.id == id 
  * with the updated question if a question with the given `id` is found, or the original [Survey]
  * if no question with the given `id` is found.
  */
-fun Survey.update(updated: Question<*>): Survey = map {
-    if (it.id == updated.id) {
-        updated
-    } else {
-        it
+fun Survey.update(updated: Question<*>): Survey =
+    map {
+        if (it.id == updated.id) {
+            updated
+        } else {
+            it
+        }
     }
-}
 
 /**
  * Convenience property to calculate the total score for a set of [SurveyQuestions] by summing the

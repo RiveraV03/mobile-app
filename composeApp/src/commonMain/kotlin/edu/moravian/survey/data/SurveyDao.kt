@@ -6,7 +6,6 @@ import androidx.room.Query
 
 @Dao
 interface SurveyDao {
-
     /** Insert a new survey result, returns the new row's auto-generated ID */
     @Insert
     suspend fun insert(result: SurveyResult): Long

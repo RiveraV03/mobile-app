@@ -2,7 +2,6 @@ package edu.moravian.survey
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import edu.moravian.survey.data.toIntSet
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,10 +18,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import edu.moravian.survey.data.SurveyRepository
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import surveytaker.composeapp.generated.resources.*
+import surveytaker.composeapp.generated.resources.Res
+import surveytaker.composeapp.generated.resources.app_name
+import surveytaker.composeapp.generated.resources.arrow_back
+import surveytaker.composeapp.generated.resources.back
 
 @Composable
 fun App(repository: SurveyRepository) {
@@ -81,10 +82,11 @@ fun App(repository: SurveyRepository) {
 private fun TopAppBar(back: (() -> Unit)? = null) {
     TopAppBar(
         title = { Text(stringResource(Res.string.app_name)) },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary,
-        ),
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
         navigationIcon = {
             if (back != null) {
                 Button(onClick = back) {

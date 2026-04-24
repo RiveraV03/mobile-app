@@ -20,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import edu.moravian.survey.data.SurveyRepository
 import edu.moravian.survey.data.SurveyResult
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -47,10 +46,11 @@ fun HistoryScreen(
     }
 
     Column(
-        modifier = Modifier
-            .safeContentPadding()
-            .fillMaxSize()
-            .padding(16.dp),
+        modifier =
+            Modifier
+                .safeContentPadding()
+                .fillMaxSize()
+                .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(stringResource(Res.string.history), style = MaterialTheme.typography.headlineSmall)

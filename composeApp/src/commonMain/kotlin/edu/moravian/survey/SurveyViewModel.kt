@@ -2,7 +2,6 @@ package edu.moravian.survey
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import edu.moravian.survey.data.SurveyRepository
 import edu.moravian.survey.data.SurveyResult
 import edu.moravian.survey.data.toIntSet
 import edu.moravian.survey.data.toStoredString
@@ -11,8 +10,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SurveyViewModel(private val repository: SurveyRepository) : ViewModel() {
-
+class SurveyViewModel(
+    private val repository: SurveyRepository,
+) : ViewModel() {
     private val _survey = MutableStateFlow(AMISOS_R_SURVEY)
     val survey: StateFlow<Survey> = _survey.asStateFlow()
 
@@ -27,21 +27,24 @@ class SurveyViewModel(private val repository: SurveyRepository) : ViewModel() {
 
             val soundsQuestion = updatedSurvey["sounds"] as? QuestionWithMultiOptions
             if (soundsQuestion != null) {
-                updatedSurvey = updatedSurvey.update(
-                    soundsQuestion.copy(answer = recent.soundsAnswer.toIntSet())
-                )
+                updatedSurvey =
+                    updatedSurvey.update(
+                        soundsQuestion.copy(answer = recent.soundsAnswer.toIntSet()),
+                    )
             }
 
             val emotionsQuestion = updatedSurvey["emotions"] as? QuestionWithMultiOptionsAndOther
             if (emotionsQuestion != null) {
-                updatedSurvey = updatedSurvey.update(
-                    emotionsQuestion.copy(
-                        answer = Pair(
-                            recent.emotionsIndices.toIntSet(),
-                            recent.emotionsOther ?: ""
-                        )
+                updatedSurvey =
+                    updatedSurvey.update(
+                        emotionsQuestion.copy(
+                            answer =
+                                Pair(
+                                    recent.emotionsIndices.toIntSet(),
+                                    recent.emotionsOther ?: "",
+                                ),
+                        ),
                     )
-                )
             }
 
             _survey.value = updatedSurvey
@@ -59,8 +62,10 @@ class SurveyViewModel(private val repository: SurveyRepository) : ViewModel() {
         if (questions.hasErrors) return
 
         viewModelScope.launch {
-            val soundsAnswer = (_survey.value["sounds"] as? QuestionWithMultiOptions)
-                ?.answer?.toStoredString()
+            val soundsAnswer =
+                (_survey.value["sounds"] as? QuestionWithMultiOptions)
+                    ?.answer
+                    ?.toStoredString()
 
             val emotionsQuestion = _survey.value["emotions"] as? QuestionWithMultiOptionsAndOther
             val emotionsIndices = emotionsQuestion?.answer?.first?.toStoredString()
@@ -73,7 +78,7 @@ class SurveyViewModel(private val repository: SurveyRepository) : ViewModel() {
                     soundsAnswer = soundsAnswer,
                     emotionsIndices = emotionsIndices,
                     emotionsOther = emotionsOther,
-                )
+                ),
             )
             onCompleted()
         }

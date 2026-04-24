@@ -3,7 +3,6 @@ package edu.moravian.survey
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import edu.moravian.survey.data.toIntSet
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
@@ -19,10 +18,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import edu.moravian.survey.data.SurveyRepository
+import edu.moravian.survey.data.toIntSet
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
-import surveytaker.composeapp.generated.resources.*
+import surveytaker.composeapp.generated.resources.Res
+import surveytaker.composeapp.generated.resources.loading
+import surveytaker.composeapp.generated.resources.score
 
 @Serializable
 data class ViewSurveyScreenDest(
@@ -49,22 +50,25 @@ fun ViewSurveyScreen(
             var updatedSurvey = survey
             val soundsQuestion = updatedSurvey["sounds"] as? QuestionWithMultiOptions
             if (soundsQuestion != null) {
-                updatedSurvey = updatedSurvey.update(
-                    soundsQuestion.copy(answer = result.soundsAnswer.toIntSet())
-                )
+                updatedSurvey =
+                    updatedSurvey.update(
+                        soundsQuestion.copy(answer = result.soundsAnswer.toIntSet()),
+                    )
             }
 
             // Pre-fill emotions answer
             val emotionsQuestion = updatedSurvey["emotions"] as? QuestionWithMultiOptionsAndOther
             if (emotionsQuestion != null) {
-                updatedSurvey = updatedSurvey.update(
-                    emotionsQuestion.copy(
-                        answer = Pair(
-                            result.emotionsIndices.toIntSet(),
-                            result.emotionsOther ?: ""
-                        )
+                updatedSurvey =
+                    updatedSurvey.update(
+                        emotionsQuestion.copy(
+                            answer =
+                                Pair(
+                                    result.emotionsIndices.toIntSet(),
+                                    result.emotionsOther ?: "",
+                                ),
+                        ),
                     )
-                )
             }
 
             survey = updatedSurvey
@@ -81,9 +85,10 @@ fun ViewSurveyScreen(
     }
 
     Column(
-        modifier = Modifier
-            .safeContentPadding()
-            .fillMaxSize(),
+        modifier =
+            Modifier
+                .safeContentPadding()
+                .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(

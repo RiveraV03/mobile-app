@@ -1,0 +1,22 @@
+# Gradle build files
+.gradle/
+build/
+
+# IDE
+.idea/
+.kotlin/
+
+# Local settings
+local.properties
+*.properties
+
+# macOS
+.DS_Store
+
+# iOS
+iosApp/
+
+# Misc
+*.iml
+.classpath
+.project

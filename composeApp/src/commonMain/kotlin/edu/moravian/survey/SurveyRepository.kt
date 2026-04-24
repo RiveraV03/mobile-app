@@ -1,11 +1,15 @@
-package edu.moravian.survey.data
+package edu.moravian.survey
+
+import edu.moravian.survey.data.SurveyDao
+import edu.moravian.survey.data.SurveyResult
 
 /**
  * Repository that acts as the single source of truth for survey data.
  * All ViewModels and screens talk to this instead of the DAO directly.
  */
-class SurveyRepository(private val dao: SurveyDao) {
-
+class SurveyRepository(
+    private val dao: SurveyDao,
+) {
     /** Insert a completed survey result, returns the new ID */
     suspend fun insert(result: SurveyResult): Long = dao.insert(result)
 

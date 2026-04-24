@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -39,6 +40,11 @@ fun HomeScreen(
     val viewModel = viewModel { HomeScreenViewModel(repository) }
     val mostRecent by viewModel.mostRecent.collectAsState()
     val loaded by viewModel.loaded.collectAsState()
+
+    // Refresh data every time this screen becomes visible
+    LaunchedEffect(Unit) {
+        viewModel.refresh()
+    }
 
     Column(
         modifier =

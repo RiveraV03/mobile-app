@@ -16,9 +16,18 @@ class HomeScreenViewModel(private val repository: SurveyRepository) : ViewModel(
     val loaded: StateFlow<Boolean> = _loaded.asStateFlow()
 
     init {
+        loadData()
+    }
+
+    private fun loadData() {
         viewModelScope.launch {
             _mostRecent.value = repository.getMostRecent()
             _loaded.value = true
         }
+    }
+
+    fun refresh() {
+        _loaded.value = false
+        loadData()
     }
 }

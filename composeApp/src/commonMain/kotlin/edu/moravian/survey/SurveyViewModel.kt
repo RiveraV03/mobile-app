@@ -10,6 +10,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for the survey screen.
+ * Loads the most recent survey result from the repository and pre-fills the survey if available.
+ * Exposes the current survey state and submission status as StateFlows.
+ */
+
 class SurveyViewModel(
     private val repository: SurveyRepository,
 ) : ViewModel() {

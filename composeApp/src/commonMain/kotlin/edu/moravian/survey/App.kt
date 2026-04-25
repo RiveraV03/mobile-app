@@ -25,6 +25,10 @@ import surveytaker.composeapp.generated.resources.app_name
 import surveytaker.composeapp.generated.resources.arrow_back
 import surveytaker.composeapp.generated.resources.back
 
+/**
+ * This file contains the main app entry point and navigation setup.
+ */
+
 @Composable
 fun App(repository: SurveyRepository) {
     val navController = rememberNavController()
@@ -77,6 +81,10 @@ fun App(repository: SurveyRepository) {
     }
 }
 
+/**
+ * A simple wrapper around [TopAppBar] that sets the title and colors,
+ * and optionally shows a back button.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopAppBar(back: (() -> Unit)? = null) {

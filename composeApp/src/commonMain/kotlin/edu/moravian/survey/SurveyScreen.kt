@@ -23,9 +23,20 @@ import surveytaker.composeapp.generated.resources.Res
 import surveytaker.composeapp.generated.resources.answer_all
 import surveytaker.composeapp.generated.resources.submit
 
+/**
+ * This file contains the survey screen,
+ * which shows the current survey and allows the user to answer questions and submit.
+ */
 @Serializable
 data object SurveyScreen
 
+/**
+ * Displays the current survey, allowing the user to answer questions and submit.
+ *
+ * @param repository The repository to load the survey from and save results to.
+ * @param onCompleted A callback that is called when the user successfully submits the survey,
+ *   which can be used to navigate away from this screen.
+ */
 @Composable
 fun SurveyScreen(
     repository: SurveyRepository,
@@ -64,6 +75,14 @@ fun SurveyScreen(
     }
 }
 
+/**
+ * Displays the current survey, allowing the user to answer questions.
+ *
+ * @param survey The survey to display.
+ * @param showErrors Whether to show validation errors for unanswered questions.
+ * @param onAnswer An optional callback that is called whenever the user answers a question,
+ *   with the updated survey as a parameter.
+ */
 @Composable
 fun ColumnScope.SurveyView(
     survey: Survey,

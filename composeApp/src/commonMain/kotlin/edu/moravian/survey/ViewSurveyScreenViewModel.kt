@@ -8,6 +8,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for the view survey screen.
+ * Loads a specific survey result by ID from the repository and pre-fills the survey if available.
+ * Exposes the current survey state, score, timestamp, and loading status as StateFlows.
+ */
+
 class ViewSurveyScreenViewModel(
     private val surveyId: Long,
     private val repository: SurveyRepository,

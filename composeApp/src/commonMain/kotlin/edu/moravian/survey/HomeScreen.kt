@@ -28,9 +28,17 @@ import surveytaker.composeapp.generated.resources.no_survey_results_yet
 import surveytaker.composeapp.generated.resources.take_survey
 import surveytaker.composeapp.generated.resources.view_history
 
+/**
+ * This file contains the home screen,
+ * which shows the most recent survey result and options to take a new survey or view history.
+ */
 @Serializable
 data object HomeScreen
 
+/**
+ * Displays the home screen,
+ * which shows the most recent survey result and options to take a new survey or view history.
+ */
 @Composable
 fun HomeScreen(
     repository: SurveyRepository,
@@ -63,6 +71,10 @@ fun HomeScreen(
     }
 }
 
+/**
+ * Displays the status text on the home screen,
+ * which shows the most recent survey result and a reminder if it's been too long.
+ */
 @Composable
 private fun StatusText(mostRecent: SurveyResult?) {
     val now = currentTimeMillis()

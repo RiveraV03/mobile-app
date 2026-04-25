@@ -22,11 +22,21 @@ import surveytaker.composeapp.generated.resources.Res
 import surveytaker.composeapp.generated.resources.loading
 import surveytaker.composeapp.generated.resources.score
 
+/**
+ * This file contains the screen for viewing a past survey result.
+ */
+
 @Serializable
 data class ViewSurveyScreenDest(
     val surveyId: Long,
 )
 
+/**
+ * Displays a past survey result, including the score, timestamp, and all questions and answers.
+ *
+ * @param surveyId The ID of the survey result to display.
+ * @param repository The repository to load the survey result from.
+ */
 @Composable
 fun ViewSurveyScreen(
     surveyId: Long,

@@ -246,6 +246,12 @@ private fun RadioButtonGroup(
     )
 }
 
+/**
+ * Renders a text field for the "Other" option in a [QuestionWithMultiOptionsAndOther] element. The
+ * text field is only editable if [onChange] is not null, allowing it to be used in both interactive
+ * and read-only modes. If the user has not entered any text, a placeholder is shown to indicate
+ * that this field is for the "Other" option.
+ */
 @Composable
 private fun OtherBox(
     text: String,
@@ -261,6 +267,12 @@ private fun OtherBox(
     )
 }
 
+/**
+ * Renders a [QuestionWithSingleOption] element as a question text followed by a group of radio
+ * buttons for the options. The user can select only one option, and the selected option is
+ * highlighted. If [showError] is true and there is an error message associated with the question,
+ * the error message is displayed below the question text in red.
+ */
 @Composable
 private fun QuestionWithSingleOptionElement(
     question: QuestionWithSingleOption,
@@ -282,6 +294,11 @@ private fun QuestionWithSingleOptionElement(
     }
 }
 
+/**
+ * Preview for the [QuestionWithSingleOptionElement] composable, showing how a question with single
+ * option is rendered with a sample question and options. This allows us to visualize the layout
+ * and styling of the question element in isolation.
+ */
 @Preview
 @Composable
 private fun QuestionWithSingleOptionElementPreview() {
@@ -296,6 +313,12 @@ private fun QuestionWithSingleOptionElementPreview() {
     ) { }
 }
 
+/**
+ * Renders a [QuestionWithMultiOptions] element as a question text followed by a group of checkboxes
+ * for the options. The user can select multiple options, and the selected options are highlighted. If
+ * [showError] is true and there is an error message associated with the question, the error message is
+ * displayed below the question text in red.
+ */
 @Composable
 private fun QuestionWithMultiOptionsElement(
     question: QuestionWithMultiOptions,
@@ -318,6 +341,11 @@ private fun QuestionWithMultiOptionsElement(
     }
 }
 
+/**
+ * Preview for the [QuestionWithMultiOptionsElement] composable, showing how a question with multiple
+ * options is rendered with a sample question and options. This allows us to visualize the layout
+ * and styling of the multi-option question element in isolation.
+ */
 @Preview
 @Composable
 private fun QuestionWithMultiOptionsElementPreview() {
@@ -332,6 +360,13 @@ private fun QuestionWithMultiOptionsElementPreview() {
     ) { }
 }
 
+/**
+ * Renders a [QuestionWithMultiOptionsAndOther] element as a question text followed by a group of
+ * checkboxes for the options and a text field for the "Other" option. The user can select multiple
+ * options and provide a custom answer for the "Other" option. The selected options and the "Other"
+ * text are highlighted. If [showError] is true and there is an error message associated with the
+ * question, the error message is displayed below the question text in red.
+ */
 @Composable
 private fun QuestionWithMultiOptionsAndOtherElement(
     question: QuestionWithMultiOptionsAndOther,
@@ -358,6 +393,12 @@ private fun QuestionWithMultiOptionsAndOtherElement(
     }
 }
 
+/**
+ * Preview for the [QuestionWithMultiOptionsAndOtherElement] composable, showing how a question with
+ * multiple options and an "Other" option is rendered with a sample question and options. This allows
+ * us to visualize the layout and styling of the multi-option question with "Other" element in
+ * isolation.
+ */
 @Preview
 @Composable
 private fun QuestionWithMultiOptionsAndOtherElementPreview() {

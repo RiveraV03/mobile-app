@@ -8,7 +8,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class HistoryScreenViewModel(private val repository: SurveyRepository) : ViewModel() {
+/**
+ * ViewModel for the history screen.
+ * Loads all survey results from the repository and exposes them as a StateFlow.
+ */
+
+class HistoryScreenViewModel(
+    private val repository: SurveyRepository,
+) : ViewModel() {
     private val _entries = MutableStateFlow(emptyList<SurveyResult>())
     val entries: StateFlow<List<SurveyResult>> = _entries.asStateFlow()
 

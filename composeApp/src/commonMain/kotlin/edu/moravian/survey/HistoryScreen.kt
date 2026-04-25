@@ -28,7 +28,8 @@ import surveytaker.composeapp.generated.resources.no_history
 import surveytaker.composeapp.generated.resources.score
 
 /**
- * This file contains the history screen, which shows a list of past survey results.
+ * This file contains the history screen,
+ * which shows a list of past survey results and allows the user to view details of each result
  */
 @Serializable
 data object HistoryScreen

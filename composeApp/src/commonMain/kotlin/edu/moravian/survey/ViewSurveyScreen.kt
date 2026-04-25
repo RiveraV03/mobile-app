@@ -32,10 +32,14 @@ data class ViewSurveyScreenDest(
 )
 
 /**
- * Displays a past survey result, including the score, timestamp, and all questions and answers.
+ * View historical survey screen composable.
  *
- * @param surveyId The ID of the survey result to display.
- * @param repository The repository to load the survey result from.
+ * Displays a past survey result in read-only mode with all original answers visible.
+ * Shows the original score, submission date/time, and pre-filled Q1 & Q2 answers.
+ * Q3-Q10 are shown blank (not persisted in database).
+ *
+ * @param surveyId The unique ID of the survey result to display
+ * @param repository Repository for loading the survey result
  */
 @Composable
 fun ViewSurveyScreen(

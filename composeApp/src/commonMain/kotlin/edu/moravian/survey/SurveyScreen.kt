@@ -31,11 +31,13 @@ import surveytaker.composeapp.generated.resources.submit
 data object SurveyScreen
 
 /**
- * Displays the current survey, allowing the user to answer questions and submit.
+ * Survey-taking screen composable.
  *
- * @param repository The repository to load the survey from and save results to.
- * @param onCompleted A callback that is called when the user successfully submits the survey,
- *   which can be used to navigate away from this screen.
+ * Displays the full AMISOS-R survey with validation. Errors only show after first submit attempt.
+ * User can answer questions and submit. On successful submission, calls onCompleted() to navigate away.
+ *
+ * @param repository Repository for saving survey results
+ * @param onCompleted Callback invoked when survey is successfully submitted
  */
 @Composable
 fun SurveyScreen(
@@ -76,12 +78,11 @@ fun SurveyScreen(
 }
 
 /**
- * Displays the current survey, allowing the user to answer questions.
+ * Renders the survey in a bordered column with answer callbacks.
  *
- * @param survey The survey to display.
- * @param showErrors Whether to show validation errors for unanswered questions.
- * @param onAnswer An optional callback that is called whenever the user answers a question,
- *   with the updated survey as a parameter.
+ * @param survey The survey to display
+ * @param showErrors If true, displays validation errors for unanswered/invalid questions
+ * @param onAnswer Optional callback invoked when user answers a question (null = read-only)
  */
 @Composable
 fun ColumnScope.SurveyView(

@@ -26,7 +26,18 @@ import surveytaker.composeapp.generated.resources.arrow_back
 import surveytaker.composeapp.generated.resources.back
 
 /**
- * This file contains the main app entry point and navigation setup.
+ * Root composable for the AMISOS-R Survey application.
+ *
+ * Sets up the navigation structure with a top app bar and NavHost.
+ * Four destinations: HomeScreen (entry point) → SurveyScreen, HistoryScreen, ViewSurveyScreen.
+ *
+ * **Navigation Flow:**
+ * - HomeScreen: Shows last result + reminder
+ * - SurveyScreen: Take a new survey
+ * - HistoryScreen: View all past surveys
+ * - ViewSurveyScreen: View one historical survey
+ *
+ * The back button is hidden on HomeScreen and visible on all other screens.
  */
 
 @Composable

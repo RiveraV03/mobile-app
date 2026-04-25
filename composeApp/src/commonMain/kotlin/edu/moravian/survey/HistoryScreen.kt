@@ -34,6 +34,16 @@ import surveytaker.composeapp.generated.resources.score
 @Serializable
 data object HistoryScreen
 
+/**
+ * History screen composable.
+ *
+ * Displays a list of all past survey submissions, ordered most recent first.
+ * Each survey is displayed as a clickable card showing score and date/time.
+ * Tapping a survey navigates to ViewSurveyScreen to view it in detail.
+ *
+ * @param repository Repository for loading all survey results
+ * @param onOpenSurvey Callback with survey ID when user taps a survey
+ */
 @Composable
 fun HistoryScreen(
     repository: SurveyRepository,

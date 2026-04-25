@@ -36,8 +36,14 @@ import surveytaker.composeapp.generated.resources.view_history
 data object HomeScreen
 
 /**
- * Displays the home screen,
- * which shows the most recent survey result and options to take a new survey or view history.
+ * Home screen composable.
+ *
+ * Displays the user's most recent survey result, reminder status, and action buttons.
+ * Refreshes data every time the screen becomes visible to ensure it's always current.
+ *
+ * @param repository Repository for loading survey data
+ * @param onTakeSurvey Callback when "Take Survey" button is tapped
+ * @param onOpenHistory Callback when "View History" button is tapped
  */
 @Composable
 fun HomeScreen(
@@ -72,8 +78,12 @@ fun HomeScreen(
 }
 
 /**
- * Displays the status text on the home screen,
- * which shows the most recent survey result and a reminder if it's been too long.
+ * Displays status information about the most recent survey.
+ *
+ * Shows the score, completion date/time, and reminder message (if applicable).
+ * If no surveys exist, displays "You have not taken the survey yet."
+ *
+ * @param mostRecent The most recent survey result, or null if none exist
  */
 @Composable
 private fun StatusText(mostRecent: SurveyResult?) {

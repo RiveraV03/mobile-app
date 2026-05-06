@@ -1,5 +1,8 @@
 package edu.moravian.sketchpad
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -33,10 +36,12 @@ fun App(sketchRepository: SketchRepository? = null) {
     val currentSketchTitle = remember { mutableStateOf("") }
     val currentSketchId = remember { mutableStateOf(0L) }
     val sketches = remember { mutableStateOf(listOf<Sketch>()) }
+    val isLoadingSketches = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(currentRoute.value) {
         if (currentRoute.value == "gallery" && sketchRepository != null) {
+            isLoadingSketches.value = true
             try {
                 val loadedSketches = withContext(Dispatchers.IO) {
                     sketchRepository.getAllSketches()
@@ -44,6 +49,8 @@ fun App(sketchRepository: SketchRepository? = null) {
                 sketches.value = loadedSketches
             } catch (e: Exception) {
                 e.printStackTrace()
+            } finally {
+                isLoadingSketches.value = false
             }
         }
     }
@@ -52,63 +59,77 @@ fun App(sketchRepository: SketchRepository? = null) {
         MaterialTheme {
             Surface(modifier = Modifier.fillMaxSize()) {
                 when (currentRoute.value) {
-                    "home" -> HomeScreen(
-                        onCreateNew = { currentRoute.value = "create" },
-                        onViewGallery = { currentRoute.value = "gallery" },
-                        onSettings = { currentRoute.value = "settings" }
-                    )
-                    "create" -> NewSketchScreen(
-                        onConfirm = { title ->
-                            currentSketchTitle.value = title
-                            currentRoute.value = "canvas"
-                        },
-                        onCancel = { currentRoute.value = "home" }
-                    )
-                    "canvas" -> CanvasEditorScreen(
-                        title = currentSketchTitle.value,
-                        onSave = { currentRoute.value = "home" },
-                        onCancel = { currentRoute.value = "home" }
-                    )
-                    "gallery" -> GalleryScreen(
-                        sketches = sketches.value,
-                        onSketchClicked = { sketchId ->
-                            currentSketchId.value = sketchId
-                            currentRoute.value = "view"
-                        },
-                        onSketchDeleted = { sketchId ->
-                            scope.launch {
-                                if (sketchRepository != null) {
-                                    try {
-                                        withContext(Dispatchers.IO) {
-                                            sketchRepository.deleteSketchById(sketchId)
-                                            sketchRepository.deleteStrokesForSketch(sketchId)
+                    "home" -> AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
+                        HomeScreen(
+                            onCreateNew = { currentRoute.value = "create" },
+                            onViewGallery = { currentRoute.value = "gallery" },
+                            onSettings = { currentRoute.value = "settings" }
+                        )
+                    }
+                    "create" -> AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
+                        NewSketchScreen(
+                            onConfirm = { title ->
+                                currentSketchTitle.value = title
+                                currentRoute.value = "canvas"
+                            },
+                            onCancel = { currentRoute.value = "home" }
+                        )
+                    }
+                    "canvas" -> AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
+                        CanvasEditorScreen(
+                            title = currentSketchTitle.value,
+                            onSave = { currentRoute.value = "home" },
+                            onCancel = { currentRoute.value = "home" }
+                        )
+                    }
+                    "gallery" -> AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
+                        GalleryScreen(
+                            sketches = sketches.value,
+                            isLoading = isLoadingSketches.value,
+                            onSketchClicked = { sketchId ->
+                                currentSketchId.value = sketchId
+                                currentRoute.value = "view"
+                            },
+                            onSketchDeleted = { sketchId ->
+                                scope.launch {
+                                    if (sketchRepository != null) {
+                                        try {
+                                            withContext(Dispatchers.IO) {
+                                                sketchRepository.deleteSketchById(sketchId)
+                                                sketchRepository.deleteStrokesForSketch(sketchId)
+                                            }
+                                            val reloadedSketches = withContext(Dispatchers.IO) {
+                                                sketchRepository.getAllSketches()
+                                            }
+                                            sketches.value = reloadedSketches
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
                                         }
-                                        // Reload gallery
-                                        val reloadedSketches = withContext(Dispatchers.IO) {
-                                            sketchRepository.getAllSketches()
-                                        }
-                                        sketches.value = reloadedSketches
-                                    } catch (e: Exception) {
-                                        e.printStackTrace()
                                     }
                                 }
-                            }
-                        },
-                        onBack = { currentRoute.value = "home" }
-                    )
-                    "view" -> ViewSketchScreen(
-                        sketchId = currentSketchId.value,
-                        onBack = { currentRoute.value = "gallery" }
-                    )
-                    "settings" -> SettingsScreen(
-                        preferencesRepo = null,
-                        onBack = { currentRoute.value = "home" }
-                    )
-                    else -> HomeScreen(
-                        onCreateNew = { currentRoute.value = "create" },
-                        onViewGallery = { currentRoute.value = "gallery" },
-                        onSettings = { currentRoute.value = "settings" }
-                    )
+                            },
+                            onBack = { currentRoute.value = "home" }
+                        )
+                    }
+                    "view" -> AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
+                        ViewSketchScreen(
+                            sketchId = currentSketchId.value,
+                            onBack = { currentRoute.value = "gallery" }
+                        )
+                    }
+                    "settings" -> AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
+                        SettingsScreen(
+                            preferencesRepo = null,
+                            onBack = { currentRoute.value = "home" }
+                        )
+                    }
+                    else -> AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
+                        HomeScreen(
+                            onCreateNew = { currentRoute.value = "create" },
+                            onViewGallery = { currentRoute.value = "gallery" },
+                            onSettings = { currentRoute.value = "settings" }
+                        )
+                    }
                 }
             }
         }

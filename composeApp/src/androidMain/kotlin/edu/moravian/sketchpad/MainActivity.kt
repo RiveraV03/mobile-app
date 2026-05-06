@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         val database = Room.databaseBuilder(
             applicationContext,
             SketchPadDatabase::class.java,
-            "sketchpad_database"
+            SketchPadDatabase.DATABASE_NAME
         ).build()
 
         val repository = SketchRepository(database.sketchDao())

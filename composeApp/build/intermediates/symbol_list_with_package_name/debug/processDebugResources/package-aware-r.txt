@@ -1,4 +1,4 @@
-edu.moravian.survey
+edu.moravian.sketchpad
 attr action
 attr activityAction
 attr activityName

@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "edu.moravian.survey",
+  "applicationId": "edu.moravian.sketchpad",
   "variantName": "debug",
   "elements": [
     {

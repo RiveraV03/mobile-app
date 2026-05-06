@@ -60,14 +60,14 @@ dependencies {
 }
 
 android {
-    namespace = "edu.moravian.survey"
+    namespace = "edu.moravian.sketchpad"
     compileSdk =
         libs.versions.android.compileSdk
             .get()
             .toInt()
 
     defaultConfig {
-        applicationId = "edu.moravian.survey"
+        applicationId = "edu.moravian.sketchpad"
         minSdk =
             libs.versions.android.minSdk
                 .get()

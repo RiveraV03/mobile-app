@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "edu.moravian.survey.composeApp-mergeDebugResources-48:/values-v30/values-v30.xml",
+            "outputFile": "edu.moravian.sketchpad.composeApp-mergeDebugResources-48:/values-v30/values-v30.xml",
             "map": [
                 {
-                    "source": "/Users/abboudm/.gradle/caches/8.14.3/transforms/7967229b86b08c2482e895c3ceb9ca94/transformed/material3/res/values-v30/values-v30.xml",
+                    "source": "/Users/abboudm/.gradle/caches/8.14.3/transforms/d7ff14b48cf8504b23ccc19a16398fbf/transformed/material3/res/values-v30/values-v30.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

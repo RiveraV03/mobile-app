@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.moravian.survey"
+    package="edu.moravian.sketchpad"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -9,10 +9,10 @@
         android:targetSdkVersion="36" />
 
     <permission
-        android:name="edu.moravian.survey.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="edu.moravian.sketchpad.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="edu.moravian.survey.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="edu.moravian.sketchpad.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
         android:allowBackup="true"
@@ -26,7 +26,7 @@
         android:testOnly="true"
         android:theme="@android:style/Theme.Material.Light.NoActionBar" >
         <activity
-            android:name="edu.moravian.survey.MainActivity"
+            android:name="edu.moravian.sketchpad.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +37,7 @@
 
         <provider
             android:name="org.jetbrains.compose.resources.AndroidContextProvider"
-            android:authorities="edu.moravian.survey.resources.AndroidContextProvider"
+            android:authorities="edu.moravian.sketchpad.resources.AndroidContextProvider"
             android:enabled="true"
             android:exported="false" >
         </provider>
@@ -48,7 +48,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="edu.moravian.survey.androidx-startup"
+            android:authorities="edu.moravian.sketchpad.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

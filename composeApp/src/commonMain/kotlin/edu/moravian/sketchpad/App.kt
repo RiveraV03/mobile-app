@@ -8,6 +8,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +22,7 @@ import edu.moravian.sketchpad.ui.screens.SettingsScreen
 import edu.moravian.sketchpad.ui.screens.ViewSketchScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 val LocalSketchRepository = staticCompositionLocalOf<SketchRepository?> { null }
@@ -31,6 +33,7 @@ fun App(sketchRepository: SketchRepository? = null) {
     val currentSketchTitle = remember { mutableStateOf("") }
     val currentSketchId = remember { mutableStateOf(0L) }
     val sketches = remember { mutableStateOf(listOf<Sketch>()) }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(currentRoute.value) {
         if (currentRoute.value == "gallery" && sketchRepository != null) {
@@ -73,7 +76,23 @@ fun App(sketchRepository: SketchRepository? = null) {
                             currentRoute.value = "view"
                         },
                         onSketchDeleted = { sketchId ->
-                            currentRoute.value = "gallery"
+                            scope.launch {
+                                if (sketchRepository != null) {
+                                    try {
+                                        withContext(Dispatchers.IO) {
+                                            sketchRepository.deleteSketchById(sketchId)
+                                            sketchRepository.deleteStrokesForSketch(sketchId)
+                                        }
+                                        // Reload gallery
+                                        val reloadedSketches = withContext(Dispatchers.IO) {
+                                            sketchRepository.getAllSketches()
+                                        }
+                                        sketches.value = reloadedSketches
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                }
+                            }
                         },
                         onBack = { currentRoute.value = "home" }
                     )
